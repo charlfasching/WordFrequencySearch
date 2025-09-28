@@ -6,13 +6,47 @@ This service provides an API for analyzing word frequencies in text content. It'
 - Large text volumes
 - Real-time analysis
 - Precise word frequency counting
-
+- 
 ## Tech Stack
 - Java 25
 - Spring Boot 3.x
 - Maven for build automation
 - JUnit 5 & AssertJ for testing
 - Spring Validation for input validation
+
+## Motivation & Considerations
+
+### Pattern Matching Algorithms
+During the design phase, several text search algorithms were evaluated for their potential use in this service:
+
+1. **Rabin-Karp Algorithm**
+   - Uses hashing to find exact string matches in a text
+   - Particularly efficient for multiple pattern searches
+   - Best suited for exact substring matching rather than word boundary detection
+
+2. **Knuth-Morris-Pratt (KMP) Algorithm**
+   - Advanced pattern matching algorithm that improves efficiency by utilizing information about previous matches
+   - Creates a partial match table (also called "failure function") to avoid backing up in the text
+   - Achieves O(n + m) time complexity where n is text length and m is pattern length
+   - Particularly efficient for patterns with repeating elements
+
+### Implementation Decision
+While KMP would have been an excellent choice for pure string pattern matching, it wasn't implemented in the final solution because:
+
+1. The assignment specifically required complete word matching rather than substring searching
+2. Word boundaries and punctuation handling were more important than raw pattern matching
+3. Java's native text processing capabilities, combined with regex for word boundary detection, provided a more direct solution
+4. Seeing as there was no mention of partial or longer multi-word matches, this approach looks to be better suited
+
+### Chosen Approach
+The implemented solution uses:
+- Regular expressions for accurate word boundary detection
+- Java's native string processing for text manipulation
+- HashMap for efficient frequency counting
+- Custom comparators for sorting results
+
+
+
 
 ## Details
 
